@@ -1,0 +1,38 @@
+{
+  "inbound": {
+    "port": 1095, // 监听端口
+    "protocol": "socks", // 入口协议为 SOCKS 5
+    "domainOverride": ["tls","http"],
+    "settings": {
+      "auth": "noauth"  //socks的认证设置，noauth 代表不认证，由于 socks 通常在客户端使用，所以这里不认证
+    }
+  },
+  "outbound": {
+    "protocol": "vmess", // 出口协议
+    "settings": {
+      "vnext": [
+        {
+          "address": "aiguo.styc.co.uk", // 服务器地址，请修改为你自己的服务器 ip 或域名
+          "port": 42010,  // 服务器端口
+          "users": [
+            {
+              "id": "8e052b24-8382-40c5-a41a-55d29f23867a", // 用户 ID，必须与服务器端配置相同
+              "level": 1,
+              "alterId": 64
+            }
+          ]
+        }
+      ]
+    },
+    "streamSettings": {
+      "network": "h2",
+      "httpSettings": { //此项是关于 HTTP/2 的设置
+        "path": "/ray"
+      },
+      "security": "tls" // 客户端的 security 也要设置为 tls
+    },
+    "mux": {
+      "enabled": true
+    }
+  }
+}
